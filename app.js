@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(IPMiddleware);
+app.use(IPMiddleware);
 
 app.use("/api/login", login);
 app.use((req, res) => {
