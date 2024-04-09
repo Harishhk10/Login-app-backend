@@ -3,19 +3,24 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const LoginSchema = new Schema({
-  user: { type: String, required: true, trim: true, unique: true },
+  user: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    lowercase: true,
+  },
   otp: { type: Number, trim: true },
   lastLoginAt: {
     type: Date,
-    default: Date.now,
+    default: null,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  updatedAt: {
-    type: Date,
-    default: null,
+  userType: {
+    type: String,
   },
 });
 

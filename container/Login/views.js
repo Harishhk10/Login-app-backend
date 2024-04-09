@@ -17,10 +17,13 @@ const loginView = async (req, res) => {
     if (valueType === "email" || valueType === "phone") {
       otp = otpGenerate(5);
       // Check if the email already exists in the database
-      const existingUser = await loginModel.findOne({ user: user });
+      const existingUser = await loginModel.findOne({
+        user: user,
+      });
       if (existingUser) {
         // If the user already exists, update the OTP
         existingUser.otp = otp;
+        existingUser.userType = valueType;
         await existingUser.save();
         if (valueType === "email") {
           await emailSend(user, "Your otp is", otp);
@@ -30,11 +33,16 @@ const loginView = async (req, res) => {
           message: "OTP sent successfully",
           success: true,
           otp: otp,
-          user: user,
+          user: existingUser.user,
+          userType: existingUser.userType,
         });
       } else {
         // If the user doesn't exist, create a new entry with the generated OTP
-        const newUser = new loginModel({ user: user, otp: otp });
+        const newUser = new loginModel({
+          user: user,
+          otp: otp,
+          userType: valueType,
+        });
         await newUser.save();
         if (valueType === "email") {
           await emailSend(user, "Your otp is", otp);
@@ -45,6 +53,7 @@ const loginView = async (req, res) => {
           success: true,
           otp: otp,
           user: user,
+          userType: valueType,
         });
       }
     } else {

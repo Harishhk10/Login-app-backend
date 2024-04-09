@@ -1,5 +1,4 @@
 const checkEmailOrPhoneNumber = (input) => {
-  // Trim whitespace from the input
   const value = input.trim();
   
   // Check if the input is empty
@@ -7,9 +6,8 @@ const checkEmailOrPhoneNumber = (input) => {
     return "Enter value";
   }
 
-  // Regular expressions for email and phone number validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^\d{10}$/; // Adjust this regex according to your phone number format
+  const phoneRegex = /^\d{10}$/; 
 
   if (emailRegex.test(value)) {
     return "email";
